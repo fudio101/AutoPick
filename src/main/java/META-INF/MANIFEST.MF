@@ -1,0 +1,8 @@
+Manifest-Version: 1.1
+Multi-Release: true
+Main-Class: AutoPick
+Created-By: Fudio
+
+
+
+

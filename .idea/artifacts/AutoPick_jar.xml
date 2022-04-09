@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="AutoPick:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/AutoPick_jar</output-path>
+    <root id="archive" name="AutoPick.jar">
+      <element id="module-output" name="AutoPick" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/annotations/23.0.0/annotations-23.0.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/github/stirante/lol-client-java-api/1.2.3/lol-client-java-api-1.2.3.jar" path-in-jar="/" />
+      <element id="library" level="project" name="Maven: com.github.stirante:lol-client-java-api:1.2.3" />
+      <element id="library" level="project" name="Maven: org.jetbrains:annotations:23.0.0" />
+    </root>
+  </artifact>
+</component>
