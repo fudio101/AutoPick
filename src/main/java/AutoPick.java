@@ -71,7 +71,6 @@ public class AutoPick {
                                             System.out.println("Accepted");
                                             AutoPick.picked = false;
                                             AutoPick.locked = false;
-                                            status();
                                         }
                                     } catch (HttpHostConnectException e) {
                                         System.out.println("Can't connect to client");
@@ -92,7 +91,6 @@ public class AutoPick {
                                             ApiResponse<?> response = api.executePatch(pickApi, json);
                                             if (response == null) {
                                                 System.out.println("Selected");
-                                                status();
                                                 AutoPick.picked = true;
                                                 AutoPick.accepted = false;
                                             }
@@ -108,7 +106,6 @@ public class AutoPick {
                                             ApiResponse<?> response = api.executePost(lockApi);
                                             if (response == null) {
                                                 System.out.println("Locked");
-                                                status();
                                                 AutoPick.locked = true;
                                                 AutoPick.picked = false;
                                                 AutoPick.accepted = false;
@@ -137,6 +134,7 @@ public class AutoPick {
             public void onClientDisconnected() {
                 System.out.println("Client disconnected");
                 socket.close();
+                api.stop();
             }
         });
         //close socket when user enters something into console
@@ -148,12 +146,6 @@ public class AutoPick {
         }
         api.stop();
         socket.close();
-    }
-
-    private static void status() {
-        System.out.println(AutoPick.accepted);
-        System.out.println(AutoPick.picked);
-        System.out.println(AutoPick.locked);
     }
 
 
