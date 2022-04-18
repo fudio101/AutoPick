@@ -11,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -19,12 +20,14 @@ public class AutoPick {
     public static boolean autoAccept = true;
     public static boolean autoPick = true;
     public static boolean autoLock = true;
+
+    private static long timeTmp;
     public static boolean accepted = false;
     public static boolean picked = false;
     public static boolean locked = false;
     public static int selectedChampionId = -1;
 
-    private static final SimpleDateFormat FORMATTER = new SimpleDateFormat("dd-MM-yyyy");
+    private static Date date = new Date();
 
     private static final String clientPath = "D:\\Games\\Garena\\Garena\\games\\32787\\LeagueClient";
 
@@ -65,9 +68,13 @@ public class AutoPick {
                             if (event.getData() instanceof LolMatchmakingMatchmakingReadyCheckResource dat) {
                                 if (dat.state.toString().equals("INPROGRESS")) {
                                     try {
+                                        if (AutoPick.date.getTime() - AutoPick.timeTmp > 10000) {
+                                            AutoPick.accepted = false;
+                                        }
                                         if (AutoPick.autoAccept && !AutoPick.accepted) {
                                             api.executePost(APIs[2]);
                                             AutoPick.accepted = true;
+                                            AutoPick.timeTmp = AutoPick.date.getTime();
                                             System.out.println("Accepted");
                                             AutoPick.picked = false;
                                             AutoPick.locked = false;
@@ -79,6 +86,7 @@ public class AutoPick {
                                     }
                                 }
                             } else if (event.getData() instanceof LolChampSelectChampSelectSession dat) {
+                                AutoPick.accepted = false;
                                 int id = getId(dat);
                                 if (id > -1) {
                                     String pickApi = APIs[4] + '/' + id;
@@ -92,7 +100,6 @@ public class AutoPick {
                                             if (response == null) {
                                                 System.out.println("Selected");
                                                 AutoPick.picked = true;
-                                                AutoPick.accepted = false;
                                             }
                                         } catch (HttpHostConnectException e) {
                                             System.out.println("Can't connect to client");
@@ -108,7 +115,6 @@ public class AutoPick {
                                                 System.out.println("Locked");
                                                 AutoPick.locked = true;
                                                 AutoPick.picked = false;
-                                                AutoPick.accepted = false;
                                             }
                                         } catch (HttpHostConnectException e) {
                                             System.out.println("Can't connect to client");
