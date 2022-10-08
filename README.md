@@ -1,2 +1,2 @@
 # AutoPick
-A wonderful tool for LOL
+Auto pick character and more feature for LOL
